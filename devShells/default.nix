@@ -9,6 +9,7 @@ let
         nixfmt
         cabal-install
         ghc
+            lf
       ];
     };
   };
