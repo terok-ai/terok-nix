@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    flake-utils.url = "github:numtide/flake-utils";
     git-hooks.url = "github:cachix/git-hooks.nix";
   };
 
@@ -18,7 +19,16 @@
       let
         pkgs = self.legacyPackages.${system};
       in
+      let
+        terok-tests = pkgs.python3Packages.terok.overrideAttrs (oldAttrs: {
+          doCheck = true;
+        });
+      in
       {
+        packages = {
+          inherit terok-tests;
+        };
+
         legacyPackages = import ./. {
           pkgs = import nixpkgs;
           inherit system;
@@ -47,6 +57,7 @@
               nixfmt.enable = true;
             };
           };
+          inherit terok-tests;
         };
       }
     )

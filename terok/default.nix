@@ -38,4 +38,17 @@ python3Packages.buildPythonApplication rec {
     poetry-core
     poetry-dynamic-versioning
   ];
+
+  doCheck = false;
+  nativeCheckInputs = with python3Packages; [
+    pytest
+    pytest-asyncio
+    httpx
+  ];
+
+  checkPhase = ''
+    runHook preCheck
+    pytest tests/ -v --ignore=tests/integration --ignore=tests/e2e
+    runHook postCheck
+  '';
 }
