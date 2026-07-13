@@ -52,4 +52,8 @@ python3Packages.buildPythonApplication rec {
     pytest tests/ -v --ignore=tests/integration --ignore=tests/e2e
     runHook postInstallCheck
   '';
+
+  installCheckInputs = with python3Packages; [
+    mkdocs-terok
+  ];
 }

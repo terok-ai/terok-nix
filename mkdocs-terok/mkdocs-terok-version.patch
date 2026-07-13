@@ -1,0 +1,13 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index d96ab44..96dd96f 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -35,7 +35,7 @@ dynamic = ["version"]
+ dependencies = [
+     "PyYAML~=6.0",
+     "properdocs~=1.6.7",
+-    "squarify==0.4.4",
++    "squarify==0.4.3",
+ ]
+ 
+ [project.urls]
