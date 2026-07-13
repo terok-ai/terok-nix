@@ -21,7 +21,7 @@
       in
       let
         terok-tests = pkgs.python3Packages.terok.overrideAttrs (oldAttrs: {
-          doCheck = true;
+          doInstallCheck = true;
         });
       in
       {

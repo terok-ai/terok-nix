@@ -39,16 +39,17 @@ python3Packages.buildPythonApplication rec {
     poetry-dynamic-versioning
   ];
 
-  doCheck = false;
   nativeCheckInputs = with python3Packages; [
     pytest
     pytest-asyncio
     httpx
+    mkdocs
   ];
 
-  checkPhase = ''
-    runHook preCheck
+  installCheckPhase = ''
+    runHook preInstallCheck
+    export PYTHONPATH="${src}:$PYTHONPATH"
     pytest tests/ -v --ignore=tests/integration --ignore=tests/e2e
-    runHook postCheck
+    runHook postInstallCheck
   '';
 }
