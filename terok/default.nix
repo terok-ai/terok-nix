@@ -58,6 +58,7 @@ python3Packages.buildPythonApplication rec {
     export PATH="$out/bin:$PATH"
     mkdir -p /usr/bin
     ln -s "${nftables}/bin/nft" /usr/bin/nft
+    # TODO try terok build demo for integration tests
     pytest tests/ -v --ignore=tests/integration
     runHook postInstallCheck
   '';
