@@ -19,16 +19,7 @@
       let
         pkgs = self.legacyPackages.${system};
       in
-      let
-        terok-tests = pkgs.python3Packages.terok.overrideAttrs (oldAttrs: {
-          doInstallCheck = true;
-        });
-      in
       {
-        packages = {
-          inherit terok-tests;
-        };
-
         legacyPackages = import ./. {
           pkgs = import nixpkgs;
           inherit system;
@@ -50,14 +41,14 @@
             '';
           in
           pkgs.writeShellScriptBin "pre-commit-run" script;
-        checks = {
+        checks = with pkgs.with-checks; {
           pre-commit-check = git-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
               nixfmt.enable = true;
             };
           };
-          inherit terok-tests;
+          inherit terok;
         };
       }
     )

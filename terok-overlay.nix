@@ -38,6 +38,8 @@ let
       self;
 
     python3Packages = final.python3.pkgs;
+
+    enable-terok-checks = false;
   };
 in
 packages

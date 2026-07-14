@@ -1,6 +1,8 @@
 {
   fetchFromGitHub,
   python3Packages,
+  nftables,
+  enable-terok-checks,
 }:
 
 python3Packages.buildPythonApplication rec {
@@ -44,16 +46,16 @@ python3Packages.buildPythonApplication rec {
     pytest-asyncio
     httpx
     mkdocs
+    mkdocs-terok
+    nftables
+    terok-executor
   ];
 
+  doCheck = enable-terok-checks;
   installCheckPhase = ''
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
     pytest tests/ -v --ignore=tests/integration --ignore=tests/e2e
     runHook postInstallCheck
   '';
-
-  installCheckInputs = with python3Packages; [
-    mkdocs-terok
-  ];
 }
