@@ -1,6 +1,8 @@
 {
   fetchFromGitHub,
   python3Packages,
+  nftables,
+  enable-terok-checks,
 }:
 
 python3Packages.buildPythonPackage rec {
@@ -30,5 +32,19 @@ python3Packages.buildPythonPackage rec {
   pyproject = true;
   build-system = [ python3Packages.setuptools ];
 
-  doCheck = true;
+  nativeCheckInputs = with python3Packages; [
+    pytest
+    pytest-asyncio
+    ruamel-yaml
+  ];
+
+  doCheck = enable-terok-checks;
+  installCheckPhase = ''
+    runHook preInstallCheck
+    export PYTHONPATH="${src}:$PYTHONPATH"
+    export PATH="$out/bin:$PATH"
+    export PATH="${nftables}/bin:$PATH"
+    pytest tests/ -v --ignore=tests/integration/dns
+    runHook postInstallCheck
+  '';
 }

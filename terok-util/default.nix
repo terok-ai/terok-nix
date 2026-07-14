@@ -18,13 +18,13 @@ python3Packages.buildPythonPackage rec {
 
   buildInputs = with python3Packages; [
     platformdirs
-    ruamel-yaml
   ];
 
   propagatedBuildInputs = with python3Packages; [
     pydantic
     poetry-core
     poetry-dynamic-versioning
+    ruamel-yaml
   ];
 
   pyproject = true;
