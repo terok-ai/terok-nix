@@ -58,7 +58,7 @@ python3Packages.buildPythonApplication rec {
     export PATH="$out/bin:$PATH"
     mkdir -p /usr/bin
     ln -s "${nftables}/bin/nft" /usr/bin/nft
-    pytest tests/ -v --ignore=tests/integration --ignore=tests/e2e
+    pytest tests/ -v --ignore=tests/integration
     runHook postInstallCheck
   '';
 }

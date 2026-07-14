@@ -39,7 +39,7 @@ python3Packages.buildPythonPackage rec {
   installCheckPhase = ''
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
-    pytest tests/ -v --ignore=tests/integration --ignore=tests/e2e
+    pytest tests/ -v
     runHook postInstallCheck
   '';
 }
