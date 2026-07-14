@@ -1,6 +1,10 @@
 {
   fetchFromGitHub,
   python3Packages,
+  enable-terok-checks,
+  git,
+  coreutils,
+  nftables,
 }:
 
 python3Packages.buildPythonPackage rec {
@@ -36,5 +40,24 @@ python3Packages.buildPythonPackage rec {
   pyproject = true;
   build-system = [ python3Packages.setuptools ];
 
-  doCheck = true;
+  nativeCheckInputs = with python3Packages; [
+    pytest
+    pytest-asyncio
+    git
+    coreutils
+    nftables
+  ];
+
+  doCheck = enable-terok-checks;
+
+  installCheckPhase = ''
+    runHook preInstallCheck
+    export PYTHONPATH="${src}:$PYTHONPATH"
+    mkdir -p /bin
+    ln -s ${coreutils}/bin/sleep /bin/sleep
+    ln -s ${coreutils}/bin/false /bin/false
+    ln -s ${coreutils}/bin/echo /bin/echo
+    pytest tests/ -v
+    runHook postInstallCheck
+  '';
 }
