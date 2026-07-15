@@ -40,14 +40,14 @@
             '';
           in
           pkgs.writeShellScriptBin "pre-commit-run" script;
-        checks = with pkgs.with-checks; {
+        checks = {
           pre-commit-check = git-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
               nixfmt.enable = true;
             };
           };
-          inherit terok;
+          inherit (pkgs.with-checks) terok;
           terok-without-checks = pkgs.terok;
         };
       }
