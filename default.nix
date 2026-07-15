@@ -6,23 +6,22 @@
 
 let
   terok-overlay = import ./terok-overlay.nix;
-  enable-tests-overlay = _: _: {
-    enable-terok-checks = true;
-  };
+  make-packages =
+    # boolean
+    enable-terok-checks:
+    let
+      enable-checks-overlay = _: _: { inherit enable-terok-checks; };
+    in
+    pkgs {
+      overlays = overlays ++ [
+        terok-overlay
+        enable-checks-overlay
+      ];
+      inherit system;
+    };
 
 in
-pkgs {
-  overlays = overlays ++ [
-    terok-overlay
-  ];
-  inherit system;
-}
+make-packages false
 // {
-  with-checks = pkgs {
-    overlays = overlays ++ [
-      terok-overlay
-      enable-tests-overlay
-    ];
-    inherit system;
-  };
+  with-checks = make-packages true;
 }

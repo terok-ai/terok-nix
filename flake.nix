@@ -49,6 +49,7 @@
             };
           };
           inherit terok;
+          terok-without-checks = pkgs.terok;
         };
       }
     )

@@ -39,7 +39,7 @@ let
 
     python3Packages = final.python3.pkgs;
 
-    enable-terok-checks = false;
+    enable-terok-checks = builtins.abort "Use an overlay to select if tests should be disabled or enabled.";
   };
 in
 packages
