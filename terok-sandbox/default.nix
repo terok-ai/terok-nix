@@ -53,15 +53,12 @@ python3Packages.buildPythonPackage rec {
   installCheckPhase = ''
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
-    if [[ ! -d /bin ]]; then
-      mkdir /bin
-      ln -s ${coreutils}/bin/sleep /bin/
-      ln -s ${coreutils}/bin/false /bin/
-      ln -s ${coreutils}/bin/echo /bin/
-    fi
-    ls -lisah /
-    ls -lisah /bin
-    false
+    for tool in sleep false echo; do
+      grep -Rl "/bin/$tool" tests/ |
+        while read file; do
+          sed -i "s|/bin/$tool|${coreutils}/bin/$tool|g" "$file"
+        done
+    done
     pytest tests/ -v
     runHook postInstallCheck
   '';
