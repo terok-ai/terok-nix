@@ -59,6 +59,9 @@ python3Packages.buildPythonPackage rec {
       ln -s ${coreutils}/bin/false /bin/
       ln -s ${coreutils}/bin/echo /bin/
     fi
+    ls -lisah /
+    ls -lisah /bin
+    false
     pytest tests/ -v
     runHook postInstallCheck
   '';
