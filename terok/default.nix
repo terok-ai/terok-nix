@@ -56,6 +56,8 @@ python3Packages.buildPythonApplication rec {
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
     export PATH="$out/bin:$PATH"
+    # no clue why this is needed,
+    # but something in the tests loses the path info
     mkdir -p /usr/bin
     ln -s "${nftables}/bin/nft" /usr/bin/nft
     # TODO try terok build demo for integration tests

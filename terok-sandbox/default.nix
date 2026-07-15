@@ -54,9 +54,9 @@ python3Packages.buildPythonPackage rec {
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
     mkdir -p /bin
-    ln -s ${coreutils}/bin/sleep /bin/sleep
-    ln -s ${coreutils}/bin/false /bin/false
-    ln -s ${coreutils}/bin/echo /bin/echo
+    ln -s ${coreutils}/bin/sleep /bin/
+    ln -s ${coreutils}/bin/false /bin/
+    ln -s ${coreutils}/bin/echo /bin/
     pytest tests/ -v
     runHook postInstallCheck
   '';

@@ -38,16 +38,14 @@ python3Packages.buildPythonPackage rec {
   nativeCheckInputs = with python3Packages; [
     pytest
     pytest-asyncio
+    nftables
+    podman
   ];
 
   doCheck = enable-terok-checks;
   installCheckPhase = ''
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
-    export PATH="$out/bin:$PATH"
-    export PATH="${podman}/bin:${nftables}/bin:$PATH"
-    mkdir -p /usr/bin
-    ln -s ${podman}/bin/podman /usr/bin/podman
     pytest tests/ -v
     runHook postInstallCheck
   '';

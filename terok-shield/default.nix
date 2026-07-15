@@ -36,14 +36,13 @@ python3Packages.buildPythonPackage rec {
     pytest
     pytest-asyncio
     ruamel-yaml
+    nftables
   ];
 
   doCheck = enable-terok-checks;
   installCheckPhase = ''
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
-    export PATH="$out/bin:$PATH"
-    export PATH="${nftables}/bin:$PATH"
     pytest tests/ -v --ignore=tests/integration/dns
     runHook postInstallCheck
   '';
