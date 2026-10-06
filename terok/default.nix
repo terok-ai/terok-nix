@@ -4,15 +4,16 @@
   python3Packages,
   enable-terok-checks,
   writeShellScriptBin,
+  git,
 }:
 
 let
-  version = "v0.8.5";
+  version = "v0.9.1";
   src = fetchFromGitHub {
     owner = "terok-ai";
     repo = "terok";
     rev = version;
-    sha256 = "sha256-HhrEPOCIumHs14snepNyPwIvNS2qCxBstp+dd2aGJXQ=";
+    sha256 = "sha256-5G1G6dDX52GeFoI+0WesUYwo444vjmsB4akm6dHSJxw=";
   };
   terok = python3Packages.buildPythonApplication rec {
     pname = "terok";
@@ -42,13 +43,11 @@ let
     ];
 
     build-system = with python3Packages; [
-      poetry-core
-      poetry-dynamic-versioning
+      hatchling
+      hatch-vcs
     ];
 
-    nativeCheckInputs = with python3Packages; [
-      pytest
-    ];
+    nativeCheckInputs = (with python3Packages; [ pytest ]) ++ [ git ];
     doCheck = enable-terok-checks;
     # Only a basic install check for terok package, Nix build env is too
     # restrictive for Terok tests otherwise.
@@ -59,7 +58,7 @@ let
     installCheckPhase = ''
       runHook preInstallCheck
       export PYTHONPATH="${src}:$PYTHONPATH"
-      pytest tests/unit/tui/test_version_branch_detection.py
+      TMPDIR=/tmp pytest tests/unit/tui/test_version_branch_detection.py
       runHook postInstallCheck
     '';
     passthru = { inherit integration-tests; };
@@ -78,6 +77,7 @@ let
       pytest
       pytest-asyncio
       mkdocs-terok
+      p.terok
     ]
     ++ terok.propagatedBuildInputs
   );
@@ -95,6 +95,11 @@ let
 
     export PYTHONPATH="$dir/src:''${PYTHONPATH:-}"
     export PATH="${terok}/bin:${python3Packages.terok-executor}/bin:$PATH"
+    # Install the global shield hooks the podman integration tests require.
+    # The setup receipt binds to sys.executable, so setup must run under this
+    # environment's interpreter (via the module, matching `python -m pytest`,
+    # not the console-script wrapper) or pre_start() sees a stale receipt.
+    ${test-python-env}/bin/python -m terok_shield.cli setup
     ${test-python-env}/bin/python \
       -m pytest tests/ \
       -v \

@@ -7,13 +7,13 @@
 
 python3Packages.buildPythonPackage rec {
   pname = "mkdocs-terok";
-  version = "v0.8.1";
+  version = "v0.8.2";
 
   src = fetchFromGitHub {
     owner = "terok-ai";
     repo = "mkdocs-terok";
     rev = version;
-    sha256 = "sha256-nnlCL4DxsKhTaVYoIud+rVgtvm3MJwaFmg9xOX7tvII=";
+    sha256 = "sha256-bA7y70xxyhG6n3yESRMaW2L/yxW67H4mm6o3mexkxfQ=";
   };
 
   patches = [ ./mkdocs-terok-version.patch ];
@@ -39,7 +39,7 @@ python3Packages.buildPythonPackage rec {
   installCheckPhase = ''
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
-    pytest tests/ -v
+    TMPDIR=/tmp pytest tests/ -v
     runHook postInstallCheck
   '';
 

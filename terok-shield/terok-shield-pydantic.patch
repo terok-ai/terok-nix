@@ -1,11 +1,19 @@
 diff --git a/pyproject.toml b/pyproject.toml
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -19,7 +19,7 @@ dynamic = ["version", "classifiers"]
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["hatchling>=1.32.4", "hatch-vcs>=0.5"]
++requires = ["hatchling", "hatch-vcs"]
+ build-backend = "hatchling.build"
+ 
+ [project]
+@@ -35,7 +35,7 @@
  # pyproject.toml Hygiene").  Keep the dependency list comment-free.
  dependencies = [
      "PyYAML~=6.0",
 -    "pydantic~=2.13",
 +    "pydantic>=2.0",
-     "terok-util>=0.2.1,<0.3.0",
+     "terok-util>=0.4.0,<0.5.0",
  ]
+ 

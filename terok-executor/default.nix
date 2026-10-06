@@ -10,23 +10,26 @@
 
 python3Packages.buildPythonPackage rec {
   pname = "terok-executor";
-  version = "v0.3.1";
+  version = "v0.5.0";
 
   src = fetchFromGitHub {
     owner = "terok-ai";
     repo = "terok-executor";
     rev = version;
-    sha256 = "sha256-+CcHHeVEAguGLZ5byuWWxMUQYsf5y+WBzZmRySAtd4c=";
+    sha256 = "sha256-umtrjwIEG9a8peAXjC3gmEXQHdoQEA5FY01XmbGWmpA=";
   };
 
   propagatedBuildInputs = with python3Packages; [
     agent-client-protocol
+    jinja2
     prompt-toolkit
     rich
     pyyaml
     pydantic
+    requests
     ruamel-yaml
     terok-sandbox
+    terok-util
     tomli-w
   ];
 
@@ -34,8 +37,8 @@ python3Packages.buildPythonPackage rec {
 
   pyproject = true;
   build-system = with python3Packages; [
-    poetry-core
-    poetry-dynamic-versioning
+    hatchling
+    hatch-vcs
   ];
 
   nativeCheckInputs = with python3Packages; [
@@ -50,7 +53,7 @@ python3Packages.buildPythonPackage rec {
   installCheckPhase = ''
     runHook preInstallCheck
     export PYTHONPATH="${src}:$PYTHONPATH"
-    pytest tests/ -v
+    TMPDIR=/tmp pytest tests/unit -v
     runHook postInstallCheck
   '';
 

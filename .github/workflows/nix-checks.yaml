@@ -33,7 +33,8 @@ jobs:
           nix_path: nixpkgs=channel:nixos-26.05
       - run: |
           sudo apt install -y nftables podman
-          nix shell .#python3Packages.terok-shield --command terok-shield setup
+          nix run .#python3Packages.terok-util.integration-tests
+          nix run .#python3Packages.terok-sandbox.integration-tests
           nix run .#python3Packages.terok-clearance.integration-tests
           nix run .#python3Packages.terok-shield.integration-tests
           nix run .#terok.integration-tests
