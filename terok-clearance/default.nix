@@ -8,13 +8,13 @@
 
 let
   pname = "terok-clearance";
-  version = "v0.7.3";
+  version = "v0.8.1";
 
   src = fetchFromGitHub {
     owner = "terok-ai";
     repo = "terok-clearance";
     rev = version;
-    sha256 = "sha256-KWCDPhF8iDBOYnXM7bYro1/IxYe5P8fHiIPpj0rJwww=";
+    sha256 = "sha256-0sC5wmj0bULDHt8N58N/XBfgV/4LyW/O9UF796205W8=";
   };
 
   test-python-env = python3Packages.python.withPackages (
@@ -51,7 +51,7 @@ let
   pkg = python3Packages.buildPythonPackage {
     inherit pname version src;
 
-    patches = [ ./terok-clearance-asyncvarlink.patch ];
+    patches = [ ./terok-clearance-build.patch ];
 
     buildInputs = with python3Packages; [
       terok-util
@@ -66,8 +66,8 @@ let
 
     pyproject = true;
     build-system = with python3Packages; [
-      poetry-core
-      poetry-dynamic-versioning
+      hatchling
+      hatch-vcs
     ];
 
     nativeCheckInputs = with python3Packages; [
@@ -82,7 +82,7 @@ let
     installCheckPhase = ''
       runHook preInstallCheck
       export PYTHONPATH="${src}:$PYTHONPATH"
-      pytest tests/ -v --ignore=tests/integration
+      TMPDIR=/tmp pytest tests/ -v --ignore=tests/integration
       runHook postInstallCheck
     '';
 

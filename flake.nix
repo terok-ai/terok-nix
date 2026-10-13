@@ -42,6 +42,7 @@
             };
           };
           inherit (pkgs.with-checks) terok;
+          mkdocs-terok = pkgs.with-checks.python3Packages.mkdocs-terok;
           terok-without-checks = pkgs.terok;
         };
       }

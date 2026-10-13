@@ -6,13 +6,13 @@
 
 python3Packages.buildPythonPackage rec {
   pname = "agent-client-protocol";
-  version = "0.10.1";
+  version = "0.12.1";
 
   src = fetchFromGitHub {
     owner = "agentclientprotocol";
     repo = "python-sdk";
     rev = version;
-    sha256 = "sha256-iVmNzAx/YlvFXXVPjS1SmjDqGAr9aRDdSW93Nw2ayAY=";
+    sha256 = "sha256-GBMzhDHOiXGQDyHtDEBpGL4SH/I16Zh/QMePhiLHJSE=";
   };
 
   propagatedBuildInputs = [

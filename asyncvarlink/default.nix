@@ -6,12 +6,12 @@
 
 python3Packages.buildPythonPackage rec {
   pname = "asyncvarlink";
-  version = "0.3.1";
+  version = "0.3.2";
 
   src = fetchPypi {
     pname = "asyncvarlink";
     inherit version;
-    sha256 = "sha256-KIP5vtNarJQWpxPdbtSOzNq2k8GC65QFaeEFiGzHW9k=";
+    sha256 = "sha256-gJBngMxPp4ausF5YWPAjJhR+sU/+dSMXtOZH/FHtKKU=";
   };
 
   propagatedBuildInputs = [ ];

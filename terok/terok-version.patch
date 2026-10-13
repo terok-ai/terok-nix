@@ -1,8 +1,14 @@
 diff --git a/pyproject.toml b/pyproject.toml
-index f0e3a3b..a8c5896 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -19,13 +19,13 @@ dynamic = ["version", "classifiers"]
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["hatchling>=1.32.4", "hatch-vcs>=0.5"]
++requires = ["hatchling", "hatch-vcs"]
+ build-backend = "hatchling.build"
+ 
+ [project]
+@@ -34,13 +34,13 @@
  # Dependency pins follow the policy in AGENTS.md ("Dependency Pinning &
  # pyproject.toml Hygiene").  Keep the dependency list comment-free.
  dependencies = [
@@ -10,14 +16,14 @@ index f0e3a3b..a8c5896 100644
 +    "pydantic~=2.12.5",
      "ruamel.yaml==0.19.1",
 -    "textual[syntax]~=8.2.8",
-+    "textual[syntax]~=8.2.5",
 -    "argcomplete~=3.7",
-+    "argcomplete~=3.6.3",
 -    "requests~=2.34",
-+    "requests~=2.33.1",
 -    "rich~=15.0",
+-    "platformdirs~=4.12",
++    "textual[syntax]~=8.2.5",
++    "argcomplete~=3.6.3",
++    "requests~=2.33.1",
 +    "rich~=14.3.3",
--    "platformdirs~=4.10",
 +    "platformdirs~=4.5.1",
      "unique-namer~=1.6",
      "textual-serve~=1.1",
